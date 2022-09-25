@@ -1,0 +1,22 @@
+.size {
+   
+  width: 50vw;
+  margin: auto;
+}
+
+.size img{
+
+  background-size: fit-content;
+  width:80%;
+  height:90vh;
+}
+
+carousel-control-prev, carousel-control-next{
+  color:black;
+}
+
+h1{
+  text-align:center;
+  margin: 2em 0;
+
+}
