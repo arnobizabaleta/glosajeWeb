@@ -1,8 +1,26 @@
 <?php
 
-require 'config/config.php';
-require 'config/database.php';
+require '../config/config.php';
+require '../config/database.php';
 //Si no existe una session de usuario asociada un correo 
+if(!isset($_SESSION["usuario"])){
+ /*
+  echo '
+    <script>
+      alert("Por favor, debes iniciar Sesión);
+      window.location = "PHP_Code/login.php";
+    </script>
+    
+  ';
+*/
+  //header("location: ./PHP_Code/login.php");
+  session_destroy();//Destruya la sessión
+   header("location: ../index.php");
+  die(); // No sé ejecute el codigo siguiente
+}
+
+
+
 
   
   $db = new Database();
@@ -20,7 +38,7 @@ require 'config/database.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlosajeWeb</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
 <header>
@@ -44,7 +62,7 @@ require 'config/database.php';
   </div>
   <div class="navbar navbar-expand-lg   navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a href="index.php" class="navbar-brand">
+      <a href="catalogo.php" class="navbar-brand">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> -->
         <strong>GlosajeWeb</strong>
       </a>
@@ -58,17 +76,22 @@ require 'config/database.php';
                 <a href="#" class="nav-link active">Catalogo</a>
             </li>
             <li class="nav-item">
-                <a href="./vistas/contacto.php" class="nav-link">Contacto</a>
+                <a href="contacto.php" class="nav-link">Contacto</a>
+            </li>
+            <?php if(!isset($_SESSION["usuario"])){ ?>
+            <li class="nav-item">
+                <a href="./login.php" class="nav-link">Iniciar Sesión</a>
+            </li>
+            <?php }?>
+            <li class="nav-item">
+                <a href="micuenta.php" class="nav-link">Mi cuenta</a>
             </li>
             <li class="nav-item">
-                <a href="./vistas/login.php" class="nav-link">Iniciar Sesión</a>
+                <a href="../controladores/cerrarSesion.php" class="nav-link">Cerrar Sesión</a>
             </li>
-            
-            <li class="nav-item">
-                <a href="./vistas/login.php" class="nav-link">Mi cuenta</a>
-            </li>
+           
         </ul>
-        <a href="./vistas/login.php" class="btn btn-primary">
+        <a href="checkout.php" class="btn btn-primary">
           Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
 
         </a>
@@ -92,13 +115,13 @@ require 'config/database.php';
           <div class="card shadow-sm">
             <?php
               $id = $row['codProducto'];
-              $imagen = "./assets/images/productos/". $id ."/principal.jpg";
+              $imagen = "../assets/images/productos/". $id ."/principal.jpg";
 
               if(!file_exists($imagen)){
-                $imagen = "./assets/images/no-photo.jpg";
+                $imagen = "../assets/images/no-photo.jpg";
               }
             ?>
-            <a href="./vistas/login.php" title="principal">
+            <a href="details.php?id=<?php echo $row['codProducto']; ?>&token=<?php echo hash_hmac('sha1',$row['codProducto'],KEY_TOKEN); ?>" title="principal">
             <img src="<?php echo $imagen ?>" class="d-block w-100" id="mainImg">
             </a>
         
@@ -108,12 +131,10 @@ require 'config/database.php';
               <p class="card-text"><?php echo number_format($precioDesc,2,".",","); ?> USD</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <a href="./vistas/login.php" class="btn btn-primary">Detalles</a>
+                    <a href="details.php?id=<?php echo $row['codProducto']; ?>&token=<?php echo hash_hmac('sha1',$row['codProducto'],KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
                 </div>
-                <a href="./vistas/login.php">
-                <button class="btn btn-outline-success" type="button">
+                <button class="btn btn-outline-success" type="button"  onclick="addProducto(<?php echo $row['codProducto'];?>,'<?php echo hash_hmac('sha1',$row['codProducto'],KEY_TOKEN); ?>')">
                   Agregar al carrito</button>
-                </a>
               
             </div>
           </div>
@@ -129,6 +150,28 @@ require 'config/database.php';
       
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+  function addProducto(id, token){
+    let url = '../controladores/carrito.php';
+    let formData = new FormData();
+    formData.append('id',id);
+    formData.append('token',token);
+
+    fetch(url,{
+      method:'POST',
+      body: formData,
+      mode:'cors'
+    }).then(response => response.json())
+    .then(data =>{
+      if(data.ok){
+        let elemento = document.getElementById("num_cart");
+        elemento.innerHTML = data.numero;
+      }
+    })
+    
+  }
+</script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script type="text/javascript">
           $(window).load(function() {

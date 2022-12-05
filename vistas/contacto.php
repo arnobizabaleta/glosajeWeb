@@ -1,8 +1,12 @@
 <?php
 
-require 'config/config.php';
-require 'config/database.php';
+require '../config/config.php';
+require '../config/database.php';
 //Si no existe una session de usuario asociada un correo 
+
+
+
+
 
   
   $db = new Database();
@@ -20,7 +24,8 @@ require 'config/database.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlosajeWeb</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -44,7 +49,7 @@ require 'config/database.php';
   </div>
   <div class="navbar navbar-expand-lg   navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a href="index.php" class="navbar-brand">
+      <a href="catalogo.php" class="navbar-brand">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> -->
         <strong>GlosajeWeb</strong>
       </a>
@@ -55,80 +60,66 @@ require 'config/database.php';
       <div class="collapse navbar-collapse" id="navbarHeader">
         <ul class="nav navbar-nav me-auto md-2 mb-lg-0">
             <li class="nav-item">
-                <a href="#" class="nav-link active">Catalogo</a>
+                <a href="catalogo.php" class="nav-link active">Catalogo</a>
             </li>
             <li class="nav-item">
-                <a href="./vistas/contacto.php" class="nav-link">Contacto</a>
+                <a href="#" class="nav-link">Contacto</a>
             </li>
+            <?php if(!isset($_SESSION["usuario"])){ ?>
             <li class="nav-item">
-                <a href="./vistas/login.php" class="nav-link">Iniciar Sesión</a>
+                <a href="./login.php" class="nav-link">Iniciar Sesión</a>
             </li>
-            
+            <?php }?>
             <li class="nav-item">
-                <a href="./vistas/login.php" class="nav-link">Mi cuenta</a>
+                <a href="micuenta.php" class="nav-link">Mi cuenta</a>
             </li>
+            <?php if(isset($_SESSION["usuario"])){ ?>
+            <li class="nav-item">
+                <a href="../controladores/cerrarSesion.php" class="nav-link">Cerrar Sesión</a>
+            </li>
+            <?php }?>
         </ul>
-        <a href="./vistas/login.php" class="btn btn-primary">
+        <?php if(isset($_SESSION["usuario"])){ ?>
+           
+                <a href="checkout.php" class="btn btn-primary">
           Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
 
         </a>
+            }
+        <?php }?>
+        
       </div>
     </div>
   </div>
 </header>
 
-<main>
+<main style="margin-top:2em;">
   
     <div class="loader"></div>
-    <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <?php
-      foreach($resultado as $row){
-        $precioDesc = $row['precio_producto'] - (($row['precio_producto'] * $row['descuento'])/100) ;
-      ?>
-
-      
-        <div class="col">
-          <div class="card shadow-sm">
-            <?php
-              $id = $row['codProducto'];
-              $imagen = "./assets/images/productos/". $id ."/principal.jpg";
-
-              if(!file_exists($imagen)){
-                $imagen = "./assets/images/no-photo.jpg";
-              }
-            ?>
-            <a href="./vistas/login.php" title="principal">
-            <img src="<?php echo $imagen ?>" class="d-block w-100" id="mainImg">
-            </a>
-        
-
-            <div class="card-body">
-              <h5 class="card-title"><?php echo $row['nombre_producto']; ?></h5>
-              <p class="card-text"><?php echo number_format($precioDesc,2,".",","); ?> USD</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <a href="./vistas/login.php" class="btn btn-primary">Detalles</a>
-                </div>
-                <a href="./vistas/login.php">
-                <button class="btn btn-outline-success" type="button">
-                  Agregar al carrito</button>
-                </a>
-              
-            </div>
-          </div>
+    <div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-address-book me-2"></i><b>Contacto</b>
+        </div>
+        <div class="card-body">
+            <p>
+                <b>Creaciones Glosaje</b> es una microempresa antioqueña con 10 años 
+                de experiencia dedicada a la confección y venta de ropa interior.<br>
+                Ubicada en el área metropolitana de la ciudad de <b>Medellín</b>. <br>
+                <b> Dirección:</b> Cra 34#71-29. <br>
+                <b>Propietaria:</b> Gloria Alcazar.<br>
+                <b>Telefono de contacto:</b><i class="fas fa-phone ms-2 me-2"></i><i class="fa-brands fa-whatsapp ms-2 me-2"></i> 3104719942 <br>
+                <b>Facebook:</b> <a href="#"><i class="fa-brands fa-facebook ms-2 me-2"></i> </a>  
+            </p> 
         </div>
     </div>
 
-    <?php 
-    }
-      ?>
-
-      </div>
     </div>
       
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script type="text/javascript">
           $(window).load(function() {
