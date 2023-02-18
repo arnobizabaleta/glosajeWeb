@@ -10,10 +10,10 @@
     $tipo_usuario = $_SESSION['tipo_usuario'];
     
     
-    if($tipo_usuario == 'Administrador'){
+    if($tipo_usuario == 2){
         $sql = "SELECT codProducto,nombre_producto, descripcion,precio_producto,descuento, c.nombre_categoria AS categoria,p.activo FROM productos p INNER JOIN categorias c ON p.cod_categoria = c.codCategoria;";
         
-    }else if($tipo_usuario == 'Cliente'){
+    }else if($tipo_usuario == 1){
         header('Location: micuenta.php');
     }
 
@@ -97,7 +97,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
                                Seguridad
                             </a>
-                             <?php if($tipo_usuario == 'Administrador'){ ?> 
+                             <?php if($tipo_usuario == 2){ ?> 
                             <div class="sb-sidenav-menu-heading">Mantenimiento</div>
                             <a class="nav-link" href="categorias.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -117,13 +117,13 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                              <?php }?> 
 
                             
-                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                            <?php if($tipo_usuario == 2){ ?>
                                 <div class="sb-sidenav-menu-heading">Mis ventas</div>
                             <?php }else{ ?>
                                 <div class="sb-sidenav-menu-heading">Mis compras</div>
                                 <?php } ?>
 
-                                <?php if($tipo_usuario == 'Administrador'){ ?>
+                                <?php if($tipo_usuario == 2){ ?>
                             <a class="nav-link" href="detalleCompra.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                                 Detalles 

@@ -11,10 +11,10 @@
     $tipo_usuario = $_SESSION['tipo_usuario'];
     
     
-    if($tipo_usuario == 'Administrador'){
+    if($tipo_usuario == 2){
         $sql = "SELECT * FROM usuarios WHERE activo = 1";
         
-    }else if($tipo_usuario == 'Cliente'){
+    }else if($tipo_usuario == 1){
         $sql = "SELECT * FROM usuarios WHERE idUser = $id";
     }
 
@@ -76,12 +76,12 @@ $resultadInact = $conexion->query($sqlInact);
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                            <?php if($tipo_usuario == 2){ ?>
                             <a class="nav-link" href="usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Usuarios
                             </a>
-                            <?php } else if($tipo_usuario == 'Cliente'){?>
+                            <?php } else if($tipo_usuario == 1){?>
                             
                             <a class="nav-link" href="usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
@@ -92,7 +92,7 @@ $resultadInact = $conexion->query($sqlInact);
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
                                Seguridad
                             </a>
-                             <?php if($tipo_usuario == 'Administrador'){ ?> 
+                             <?php if($tipo_usuario == 2){ ?> 
                             <div class="sb-sidenav-menu-heading">Mantenimiento</div>
                             <a class="nav-link" href="categorias.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -112,13 +112,13 @@ $resultadInact = $conexion->query($sqlInact);
                              <?php }?> 
 
                             
-                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                            <?php if($tipo_usuario == 2){ ?>
                                 <div class="sb-sidenav-menu-heading">Mis ventas</div>
                             <?php }else{ ?>
                                 <div class="sb-sidenav-menu-heading">Mis compras</div>
                                 <?php } ?>
 
-                                <?php if($tipo_usuario == 'Administrador'){ ?>
+                                <?php if($tipo_usuario == 2){ ?>
                             <a class="nav-link" href="detalleCompra.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                                 Detalles 
@@ -150,11 +150,11 @@ $resultadInact = $conexion->query($sqlInact);
                        
                         
                         <div class="card mb-4">
-                        <?php if($tipo_usuario == 'Administrador'){ ?>
+                        <?php if($tipo_usuario == 2){ ?>
                         <div class="card-header">
                             <i class="fas fa-users me-1"></i>Lista de Usuarios
                         </div>
-                        <?php }else if($tipo_usuario == 'Cliente'){ ?>
+                        <?php }else if($tipo_usuario == 1){ ?>
                             <div class="card-header">
                             <i class="fas fa-user me-1"></i>Mis datos
                         </div>
@@ -203,12 +203,16 @@ $resultadInact = $conexion->query($sqlInact);
                                         <td><?php echo $row['municipio']; ?></td>
                                         <td><?php echo $row['comuna_barrio']; ?></td>
                                         <td><?php echo $row['direccion_exacta']; ?></td>
-                                        <td><?php echo $row['rol']; ?></td>
+                                        <td><?php  if($row['rol']== 1){
+                                                echo "cliente";
+                                        }else{
+                                            echo" Administrador ";
+                                        }  ; ?></td>
                                         <td>
                                             <a href="./editUser.php?id=<?php echo  $row['idUser']; ?>" class="btn btn-primary">
                                                 <i class="fas fa-marker"></i>
                                             </a>
-                                           <?php if($tipo_usuario == 'Administrador'){ ?>
+                                           <?php if($tipo_usuario == 2){ ?>
                                             <a href="../controladores/deleteUser.php?id=<?php echo  $row['idUser']; ?>" class="btn btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
@@ -221,7 +225,7 @@ $resultadInact = $conexion->query($sqlInact);
                             </div>
                         </div>
                     </div>
-                    <?php if($tipo_usuario == 'Administrador'){ ?>
+                    <?php if($tipo_usuario == 2){ ?>
                     
                     <div class="container px-4 mx-auto">   
                        <div class="row">
@@ -333,7 +337,7 @@ $resultadInact = $conexion->query($sqlInact);
                        
                         
                        <div class="card mb-4">
-                       <?php if($tipo_usuario == 'Administrador'){ ?>
+                       <?php if($tipo_usuario == 2){ ?>
                        <div class="card-header">
                            <i class="fas fa-users me-1"></i> <a href="usuariosInactivos.php" class="btn btn-danger">Lista de Usuarios Inactivos</a>
                        </div>

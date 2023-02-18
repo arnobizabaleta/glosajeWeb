@@ -98,12 +98,12 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                            <?php if($tipo_usuario == 2){ ?>
                             <a class="nav-link" href="./usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Usuarios
                             </a>
-                            <?php } else if($tipo_usuario == 'Cliente'){?>
+                            <?php } else if($tipo_usuario == 1){?>
                             
                             <a class="nav-link" href="./usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
@@ -117,7 +117,7 @@
                                Seguridad
                             </a>
                             
-                            <?php if($tipo_usuario == 'Administrador'){ ?> 
+                            <?php if($tipo_usuario == 2){ ?> 
                             <div class="sb-sidenav-menu-heading">Mantenimiento</div>
                             <a class="nav-link" href="./categorias.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -136,13 +136,13 @@
 
                             
                             
-                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                            <?php if($tipo_usuario == 2){ ?>
                                 <div class="sb-sidenav-menu-heading">Mis ventas</div>
                             <?php }else{ ?>
                                 <div class="sb-sidenav-menu-heading">Mis compras</div>
                                 <?php } ?>
 
-                                <?php if($tipo_usuario == 'Administrador'){ ?>
+                                <?php if($tipo_usuario == 2){ ?>
                             <a class="nav-link" href="./detalleCompra.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                                 Detalles 
@@ -261,12 +261,12 @@
                                           <div class="form-group mb-4">
                                             <input type="text" class="form-control" placeholder="Dirección Exacta" name="direccion_exactaUp" value="<?php echo $direccion_exacta; ?>" required="required"> 
                                           </div>
-                                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                                            <?php if($tipo_usuario == 2){ ?>
                                           <div class="form-group mb-4">
                                             <select class="form-select" name="rolUp" aria-label="Default select example" value="<?php echo $rol; ?>"  required="required">
-                                                <option selected value="<?php echo $rol; ?>"><?php echo $rol; ?></option>
-                                                <option  value="Cliente">Cliente</option>
-                                                <option  value="Administrador">Administrador</option>
+                                                <option selected value="<?php echo $rol; ?>"> <?php if($rol == 1){ echo "Cliente";}else{echo"Administrador";}; ?></option>
+                                                <option  value="1">Cliente</option>
+                                                <option  value="2">Administrador</option>
                                             </select>
                                         </div>  
                                         <?php }?>
@@ -343,11 +343,11 @@ if(isset($_POST['update'])){
                 $direccion_exactaUp = $_POST['direccion_exactaUp'];
                 $rolUp = $_POST['rolUp'];
     
-                if($tipo_usuario == 'Administrador'){
+                if($tipo_usuario == 2){
                     $sql_update = $con->prepare("UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?,correo_user = ?, tel_user = ? , municipio = ?, comuna_barrio = ?, direccion_exacta = ?, rol = ?  WHERE idUser = ?");
                     $result_update =  $sql_update->execute([$nombres_usuarioUp,$apellidos_usuarioUp,$correo_userUp,$tel_userUp,$municipioUp ,$comuna_barrioUp,$direccion_exactaUp,$rolUp,$row['idUser']]);
                     $row_uptate = $sql_update->fetch(PDO::FETCH_ASSOC);
-                }else if($tipo_usuario == 'Cliente'){
+                }else if($tipo_usuario == 1){
                     $sql_update = $con->prepare("UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?,correo_user = ?, tel_user = ? , municipio = ?, comuna_barrio = ?, direccion_exacta = ?  WHERE idUser = ?");
                     $result_update =  $sql_update->execute([$nombres_usuarioUp,$apellidos_usuarioUp,$correo_userUp,$tel_userUp,$municipioUp ,$comuna_barrioUp,$direccion_exactaUp,$row['idUser']]);
                     $row_uptate = $sql_update->fetch(PDO::FETCH_ASSOC);

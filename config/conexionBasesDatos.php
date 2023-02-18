@@ -5,7 +5,7 @@ $port=3308;
 $socket="";
 $user="root";
 $password="";
-$dbname="glosajeweb";
+$dbname="glosajeweb02";
 $conexion = new mysqli($host, $user, $password, $dbname, $port, $socket);
 
 ?>

@@ -49,25 +49,45 @@ if(mysqli_num_rows($verificar_correo) > 0){
     ';
     exit();//Saliendo del script actual 
 }
-$ejecutar = mysqli_query($conexion,$query);
 
-if($ejecutar){
-    echo '
+session_start();
+    $_SESSION['error'] == null;
+    $_SESSION['id'] = $idUser;
+    $_SESSION['correoRegistro'] = $correo;
+    include "email_bienvenida.php";
+
+if(($_SESSION['error'] == null)){
+    $ejecutar = mysqli_query($conexion,$query);
+
+    if($ejecutar){
+        
+        echo '
+            <script>
+                alert("Ususario Almacenado exitosamente");
+                window.location = "../vistas/login.php";
+            </script>
+        ';
+    }
+    else{
+        echo '
         <script>
-            alert("Ususario Almacenado exitosamente");
+            alert("Intentalo de nuevo, el usuario no ha sido almacenado");
             window.location = "../vistas/login.php";
         </script>
     ';
-}
-else{
+    }
+}else{
     echo '
     <script>
-        alert("Intentalo de nuevo, el usuario no ha sido almacenado");
+        alert("Intentalo de nuevo, el correo es inválido");
         window.location = "../vistas/login.php";
     </script>
 ';
 }
 
+
+
+$_SESSION['error'] = null;
 mysqli_close($conexion); //Cerrando la conexión
 
 ?>

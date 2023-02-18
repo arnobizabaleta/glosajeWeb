@@ -11,10 +11,10 @@
     $tipo_usuario = $_SESSION['tipo_usuario'];
     
     
-    if($tipo_usuario == 'Administrador'){
+    if($tipo_usuario == 2){
         $sql = "SELECT c.cod_compra,id_transaccion,fecha,status,c.id_cliente,u.nombres_usuario,u.tel_user,u.correo_user,c.id_titular,c.email,c.total FROM compras c INNER JOIN usuarios u ON c.id_cliente = u.idUser";
         
-    }else if($tipo_usuario == 'Cliente'){
+    }else if($tipo_usuario == 1){
         $sql = "SELECT c.cod_compra,id_transaccion,fecha,status,c.id_cliente,u.nombres_usuario,u.tel_user,u.correo_user,c.id_titular,c.email,c.total FROM compras c INNER JOIN usuarios u ON c.id_cliente = u.idUser WHERE c.id_cliente = $id";
     }
 
@@ -73,12 +73,12 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                            <?php if($tipo_usuario == 2){ ?>
                             <a class="nav-link" href="usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Usuarios
                             </a>
-                            <?php } else if($tipo_usuario == 'Cliente'){?>
+                            <?php } else if($tipo_usuario == 1){?>
                             
                             <a class="nav-link" href="usuarios.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
@@ -89,7 +89,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
                                Seguridad
                             </a>
-                             <?php if($tipo_usuario == 'Administrador'){ ?> 
+                             <?php if($tipo_usuario == 2){ ?> 
                             <div class="sb-sidenav-menu-heading">Mantenimiento</div>
                             <a class="nav-link" href="categorias.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -109,13 +109,13 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                              <?php }?> 
 
                             
-                            <?php if($tipo_usuario == 'Administrador'){ ?>
+                            <?php if($tipo_usuario == 2){ ?>
                                 <div class="sb-sidenav-menu-heading">Mis ventas</div>
                             <?php }else{ ?>
                                 <div class="sb-sidenav-menu-heading">Mis compras</div>
                                 <?php } ?>
 
-                                <?php if($tipo_usuario == 'Administrador'){ ?>
+                                <?php if($tipo_usuario == 2){ ?>
                             <a class="nav-link" href="detalleCompra.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-money-bill"></i></div>
                                 Detalles 
