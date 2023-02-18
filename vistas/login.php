@@ -68,16 +68,7 @@
                        <p style=" color:gray;margin-top: 0.7em; margin-bottom:-0.5em; margin-left:0.5em;">  <label for="municipio">Municipio</label> </p>
                         <div style="background: #F2F2F2; height:2.5em;  width:21.2em;">
                         <select name="municipio" id="municipio" required="required">
-                            <option value="Caldas">Caldas</option>
-                            <option value="La Estrella">La Estrella</option>
-                            <option value="Sabaneta">Sabaneta</option>
-                            <option value="Envigado">Envigado</option>
-                            <option value="Itagui">Itagüí </option>
-                            <option value="Medellin">Medellín</option>
-                            <option value="Bello">Bello</option>
-                            <option value="Copacabana">Copacabana</option>
-                            <option value="Girardota">Girardota</option>
-                            <option value="Barbosa">Barbosa</option>
+                           
                         </select>
                         </div>
                         <p style=" color:gray;margin-top: 0.7em; margin-bottom:-0.5em; margin-left:0.5em;">  <label for="municipio">Comuna-Barrio</label> </p>
@@ -151,7 +142,7 @@ $conexion = new mysqli($host, $user, $password, $dbname, $port, $socket);
           });
         </script>  
 
-        <script>
+        <script type="module">
             const comuna_barrio = document.querySelector("#comuna_barrio");
 
             comuna_barrio.onclick = function(event) {
@@ -172,6 +163,33 @@ $conexion = new mysqli($host, $user, $password, $dbname, $port, $socket);
                     otro2.parentNode.removeChild(otro2);
                 }
                 }
+        
+
+    
+            import neighborhoods from "../assets/js/domicilios.js";
+            const department = document.querySelector("select[id='municipio']");
+           
+            window.onload = () => {
+                let HTML_NEIGHBORHOODS = "<option value='notfound'>Not found</option>";
+               
+                if (!!!neighborhoods.city.length) return;
+                else HTML_NEIGHBORHOODS = "";
+
+
+                for (let city of neighborhoods.city) {
+                    HTML_NEIGHBORHOODS += `
+                        <option value="${city}">${city}</option>
+                    `;
+                }
+
+
+                department.innerHTML = HTML_NEIGHBORHOODS;
+            }
+
+
+            department.onclick = function () {
+                console.log(this);
+            }
         </script>
 </body>
 </html>
