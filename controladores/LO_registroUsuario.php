@@ -15,9 +15,16 @@ require '../config/conexionBasesDatos.php';
     //$departamento = $_POST["departamento"];
     $municipio = $_POST["municipio"];
     $comuna_barrio = $_POST["comuna_barrio"];
+    //LOGICA COMUNA_BARRIO SI NO EXISTE
+    if($comuna_barrio == "Otra"){
+        $comuna_barrio = $_POST["otro2"];
+    }
+    
     $direccion_exacta = $_POST["direccion_exacta"];
     //Encryptar Contraseña
     $contrasena = hash('sha512',$contrasena);
+
+
     $query = "INSERT INTO usuarios(idUser,nombres_usuario,apellidos_usuario,correo_user,
     contrasena,tel_user,municipio,comuna_barrio,direccion_exacta) 
     VALUES('$idUser','$nombre_completo','$apellidos','$correo','$contrasena','$tel_user',

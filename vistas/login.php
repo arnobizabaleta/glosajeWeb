@@ -150,6 +150,29 @@ $conexion = new mysqli($host, $user, $password, $dbname, $port, $socket);
               $(".loader").fadeOut("slow");
           });
         </script>  
+
+        <script>
+            const comuna_barrio = document.querySelector("#comuna_barrio");
+
+            comuna_barrio.onclick = function(event) {
+                const target = event.target;
+                console.log(target.tagName);
+
+                const otro2 = document.querySelector("[name='otro2']");
+
+                if (target.tagName === "SELECT" && target.value === "Otra" && !!!otro2) {
+
+                    const HTML = `
+                        <input type="text" name="otro2" placeholder="Su barrio" required="required"/>
+                    `;
+                    return target.closest("div").insertAdjacentHTML("afterend", HTML);
+                }
+                
+                if (!!otro2) {
+                    otro2.parentNode.removeChild(otro2);
+                }
+                }
+        </script>
 </body>
 </html>
 

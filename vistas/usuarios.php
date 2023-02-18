@@ -12,7 +12,7 @@
     
     
     if($tipo_usuario == 2){
-        $sql = "SELECT * FROM usuarios WHERE activo = 1";
+        $sql = "SELECT * FROM usuarios WHERE activo = 1 and rol = 1";
         
     }else if($tipo_usuario == 1){
         $sql = "SELECT * FROM usuarios WHERE idUser = $id";
