@@ -1,28 +1,14 @@
 <?php
-   
-    use PHPMailer\PHPMailer\{PHPMailer,SMTP,Exception};
-    
-    require '../librerias/phpmailer/src/PHPMailer.php';
-    require '../librerias/phpmailer/src/SMTP.php';
-    require '../librerias/phpmailer/src/Exception.php';
+     use PHPMailer\PHPMailer\{PHPMailer,SMTP,Exception};
 
-   //include '../captura.php';
-   
+     class Mailer {
 
-    //session_start();
-    require '../config/conexionBasesDatos.php';
-    $id_user = $_SESSION['id'];
-    $correoRegistro  = $_SESSION['correoRegistro'] ;
-   
-  
-    /* $sql = "SELECT * FROM usuarios";
-    $sql = "SELECT * FROM usuarios WHERE idUser = $id_user";
-    $resultado = $conexion->query($sql);
-    $row = $resultado->fetch_assoc(); */
-    $emailToClient = $correoRegistro;
-    //print_r("idCliente:". $id);
+        function enviar_email($email, $asunto, $cuerpo){
+            require '../librerias/phpmailer/src/PHPMailer.php';
+            require '../librerias/phpmailer/src/SMTP.php';
+            require '../librerias/phpmailer/src/Exception.php';
 
-    //Create an instance; passing `true` enables exceptions
+            //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
 try {
@@ -38,7 +24,7 @@ try {
 
     //Recipients
     $mail->setFrom('glosajeweb@gmail.com', 'glosajeWeb');
-    $mail->addAddress($emailToClient, 'Cliente');     //Add a recipient
+    $mail->addAddress($email, 'Cliente');     //Add a recipient
     // $mail->addAddress('arnzabaleta@misena.edu.co');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
    
@@ -46,16 +32,18 @@ try {
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Bienvenido a GlosajeWeb';
-    $cuerpo = '<h4> ¡ Gracias por  registrarse en GlosajeWeb !</h4>';
-    $cuerpo .= '<h3> Nos place darte la bienvenida a nuestro sitio web diseñado para tí, te esperamos.</h3>' ;
-    $cuerpo .= '<p>No  olvides  tu contraseña</p>' ;
-   
+    $mail->Subject = $asunto ;
+     
 
     $mail->Body    = utf8_decode($cuerpo) ;
-    $mail->AltBody = 'Le damos la bienvenida a nuestro sistema.';
+   
     $mail->setLanguage('es','../librerias/phpmailer/language/phpmailer.lang-es');
-    $mail->send();
+
+    if($mail->send()){
+        return true;
+    }else{
+        return false;
+    }
 
   
    
@@ -64,10 +52,12 @@ try {
 } catch (Exception $e) {
     echo "Error al enviar el correo electronico de bienvenida: {$mail->ErrorInfo}";
     
-    //exit;
+    return false;
     
     
 }
+        }
 
-
+        
+     }
 ?>

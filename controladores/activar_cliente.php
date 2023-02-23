@@ -1,3 +1,55 @@
+<?php
+
+require '../config/config.php';
+require '../config/database.php';
+
+function validaToken($id,$token,$con){
+
+    $msg = "";
+    $sql = $con->prepare("SELECT idUser FROM usuarios WHERE idUser = ? AND token = ? LIMIT 1");
+    $sql->execute([$id, $token]);
+    
+    if($sql->fetchColumn() > 0){
+        if(activarUsuario($id, $con)){
+            $msg = "Cuenta activada.";
+        }else{
+            $msg = "Error al activar cuenta";
+        }
+    }else{
+        $msg = "No existe el registro del cliente.";
+    }
+    return $msg;
+}
+
+function activarUsuario($id,$con){
+    $sql = $con->prepare("UPDATE usuarios SET activo = 1 WHERE idUser = ?");
+    return  $sql->execute([$id]);
+
+    
+}
+
+$db = new Database();
+$con = $db->conectar();
+
+$id = isset($_GET['id']) ? $_GET['id'] : '';
+$token = isset($_GET['token']) ? $_GET['token'] : '';
+
+
+
+if( $id == '' || $token == '' ){
+    header("Location index.php");
+    exit;
+} 
+
+$mensaje = validaToken($id,$token,$con);
+
+  
+  
+  
+ 
+ 
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +83,7 @@
   </div>
   <div class="navbar navbar-expand-lg   navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a href="catalogo.php" class="navbar-brand">
+      <a href="../vistas/catalogo.php" class="navbar-brand">
         <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> -->
         <strong>GlosajeWeb</strong>
       </a>
@@ -42,18 +94,18 @@
       <div class="collapse navbar-collapse" id="navbarHeader">
         <ul class="nav navbar-nav me-auto md-2 mb-lg-0">
             <li class="nav-item">
-                <a href="catalogo.php" class="nav-link active">Catalogo</a>
+                <a href="../vistas/catalogo.php" class="nav-link active">Catalogo</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">Contacto</a>
+                <a href="../vistas/contacto.php" class="nav-link">Contacto</a>
             </li>
             <?php if(!isset($_SESSION["usuario"])){ ?>
             <li class="nav-item">
-                <a href="./login.php" class="nav-link">Iniciar Sesión</a>
+                <a href="../vistas/login.php" class="nav-link">Iniciar Sesión</a>
             </li>
             <?php }?>
             <li class="nav-item">
-                <a href="micuenta.php" class="nav-link">Mi cuenta</a>
+                <a href="../vistas/micuenta.php" class="nav-link">Mi cuenta</a>
             </li>
             <?php if(isset($_SESSION["usuario"])){ ?>
             <li class="nav-item">
@@ -81,17 +133,13 @@
     <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <i class="fas fa-address-book me-2"></i><b>Contacto</b>
+            <i class="fas fa-address-book me-2"></i><b>Activar cliente</b>
         </div>
         <div class="card-body">
             <p>
-                <b>Creaciones Glosaje</b> es una microempresa antioqueña con 10 años 
-                de experiencia dedicada a la confección y venta de ropa interior.<br>
-                Ubicada en el área metropolitana de la ciudad de <b>Medellín</b>. <br>
-                <b> Dirección:</b> Cra 34#71-29. <br>
-                <b>Propietaria:</b> Gloria Alcazar.<br>
-                <b>Telefono de contacto:</b><i class="fas fa-phone ms-2 me-2"></i><i class="fa-brands fa-whatsapp ms-2 me-2"></i> 3104719942 <br>
-                <b>Facebook:</b> <a href="#"><i class="fa-brands fa-facebook ms-2 me-2"></i> </a>  
+                <?php
+                    echo $mensaje;
+                ?> 
             </p> 
         </div>
     </div>
