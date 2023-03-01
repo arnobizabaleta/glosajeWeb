@@ -10,7 +10,7 @@
         $nombre = $_SESSION['nombre'];
         if(isset($_POST['changePass'])){
             
-            $idUser = $_SESSION['id'];
+            $id_user = $_SESSION['id'];
             $contrasena = $_POST["contrasenaActual"];
             $_SESSION['Contrasena'] = $_POST["contrasenaActual"];
             $contrasenaNueva= $_POST["contrasenaNueva"];
@@ -22,7 +22,7 @@
             $contrasenaNueva =  hash('sha512',$contrasenaNueva);
             $contrasenaNueva2 = hash('sha512',$contrasenaNueva2);
             //Verificar que el usuario con ese email y password exista en la DATABASE
-            $query = "SELECT * FROM usuarios WHERE  idUser = '$idUser' AND contrasena = '$contrasena'";
+            $query = "SELECT * FROM usuarios WHERE  id_user = '$id_user' AND contrasena = '$contrasena'";
             $validar_Contrasena = mysqli_query($conexion,$query);
 
 
@@ -52,8 +52,8 @@
             }else{
                 $db = new Database();
                         $con = $db->conectar();
-                        $sql = $con->prepare("UPDATE usuarios SET contrasena = ? WHERE idUser = ?");
-                        $result =  $sql->execute([$contrasenaNueva,$idUser]);
+                        $sql = $con->prepare("UPDATE usuarios SET contrasena = ? WHERE id_user = ?");
+                        $result =  $sql->execute([$contrasenaNueva,$id_user]);
                         $row = $sql->fetch(PDO::FETCH_ASSOC);
                         
                         

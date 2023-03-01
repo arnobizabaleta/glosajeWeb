@@ -190,7 +190,7 @@ $resultadInact = $conexion->query($sqlInact);
                                        
                                        <?php while($row2 = $resultadInact->fetch_assoc()) { ?>
                                       <tr>
-                                       <td><?php echo $row2['idUser']; ?></td>
+                                       <td><?php echo $row2['id_user']; ?></td>
                                        <td><?php echo $row2['nombres_usuario']; ?></td>
                                        <td><?php echo $row2['apellidos_usuario']; ?></td>
                                        <td><?php echo $row2['correo_user']; ?></td>
@@ -200,7 +200,7 @@ $resultadInact = $conexion->query($sqlInact);
                                        <td><?php echo $row2['direccion_exacta']; ?></td>
                                        <td><?php echo $row2['rol']; ?></td>
                                        <td>
-                                           <a href="../controladores/activUser.php?id=<?php echo  $row2['idUser']; ?>" class="btn btn-success">
+                                           <a href="../controladores/activUser.php?id=<?php echo  $row2['id_user']; ?>" class="btn btn-success">
                                                <i class="fas fa-marker"></i>
                                            </a>
                                          

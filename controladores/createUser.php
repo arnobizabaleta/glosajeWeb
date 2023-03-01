@@ -7,7 +7,7 @@ if(!isset($_SESSION['id'])){
 }
 
     if(isset($_POST['createUser'])){
-        $idUser = $_POST['idUser'];
+        $id_user = $_POST['id_user'];
         $nombres_usuario = $_POST['nombres_usuario'];
         $apellidos_usuario = $_POST['apellidos_usuario'];
         $correo_user = $_POST['correo_user'];
@@ -23,9 +23,9 @@ if(!isset($_SESSION['id'])){
         
 
         //Verificar que la ID del usuario no se repita
-        $verificar_idUser = mysqli_query($conexion,"SELECT * FROM usuarios WHERE idUser = '$idUser'");
+        $verificar_id_user = mysqli_query($conexion,"SELECT * FROM usuarios WHERE id_user = '$id_user'");
         //Si hay una fila o registro de la ejecucion de la consulta anterior
-        if(mysqli_num_rows($verificar_idUser) > 0){
+        if(mysqli_num_rows($verificar_id_user) > 0){
         
             $_SESSION['message'] = "El usuario con este nro de Identidad ya se encuentra registrado";
             $_SESSION['message_type'] = "danger";
@@ -46,8 +46,8 @@ if(!isset($_SESSION['id'])){
 
         $db = new Database();
         $con = $db->conectar();
-        $sql = $con->prepare("INSERT INTO usuarios(idUser,nombres_usuario,apellidos_usuario,correo_user,contrasena, tel_user, municipio,comuna_barrio,direccion_exacta) VALUES(?,?,?,?,?,?,?,?,?)");
-        $resultado =  $sql->execute([$idUser, $nombres_usuario,$apellidos_usuario,$correo_user,$contrasena,$tel_user,$municipio,$comuna_barrio,$direccion_exacta]);
+        $sql = $con->prepare("INSERT INTO usuarios(id_user,nombres_usuario,apellidos_usuario,correo_user,contrasena, tel_user, municipio,comuna_barrio,direccion_exacta) VALUES(?,?,?,?,?,?,?,?,?)");
+        $resultado =  $sql->execute([$id_user, $nombres_usuario,$apellidos_usuario,$correo_user,$contrasena,$tel_user,$municipio,$comuna_barrio,$direccion_exacta]);
        
         $id_nuevaProducto= $con->lastInsertId();
         if($resultado <= 0){

@@ -7,7 +7,7 @@ require 'config/database.php';
   
   $db = new Database();
   $con = $db->conectar();
-  $sql = $con->prepare("SELECT codProducto,nombre_producto,precio_producto,descuento FROM productos WHERE activo=1");
+  $sql = $con->prepare("SELECT cod_producto,nombre_producto,precio_producto,descuento FROM productos WHERE activo=1");
   $sql->execute();
   $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);//Trae los resultados del query por nombreDeColumna
   
@@ -91,7 +91,7 @@ require 'config/database.php';
         <div class="col">
           <div class="card shadow-sm">
             <?php
-              $id = $row['codProducto'];
+              $id = $row['cod_producto'];
               $imagen = "./assets/images/productos/". $id ."/principal.jpg";
 
               if(!file_exists($imagen)){

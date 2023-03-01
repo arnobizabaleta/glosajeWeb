@@ -38,7 +38,7 @@
             if($productos != null){
                 foreach($productos as $clave => $cantidad){
             
-                    $sql = $con->prepare("SELECT codProducto,nombre_producto,precio_producto, descuento FROM productos WHERE codProducto=? AND  activo=1");
+                    $sql = $con->prepare("SELECT cod_producto,nombre_producto,precio_producto, descuento FROM productos WHERE cod_producto=? AND  activo=1");
                     $sql->execute([$clave]);
                     $row_prod= $sql->fetch(PDO::FETCH_ASSOC);//Trae los resultados del query por nombreDeColumna
                     

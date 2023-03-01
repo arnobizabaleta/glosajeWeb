@@ -13,13 +13,13 @@
             
             $db = new Database();
             $con = $db->conectar();
-            $sql = $con->prepare("SELECT codProducto,nombre_producto, descripcion,precio_producto,descuento, activo FROM productos WHERE codProducto = ?");
+            $sql = $con->prepare("SELECT cod_producto,nombre_producto, descripcion,precio_producto,descuento, activo FROM productos WHERE cod_producto = ?");
             $result =  $sql->execute([$idProducto]);
             $row = $sql->fetch(PDO::FETCH_ASSOC);
             
             if($row > 0){
-                //echo "Puedes editar el producto: " . $row['codProducto'];
-                //echo "Puedes editar el producto: " . $row['codProducto'];
+                //echo "Puedes editar el producto: " . $row['cod_producto'];
+                //echo "Puedes editar el producto: " . $row['cod_producto'];
                 $nombreProd = $row['nombre_producto'];
                 $descripcion = $row['descripcion'];
                 $precio = $row['precio_producto'];
@@ -255,8 +255,8 @@ if(isset($_POST['update'])){
     $descuentoUp = $_POST['descuentoUp'];
     $activoUp = $_POST['activoUp'];
                                          
-    $sql_update = $con->prepare("UPDATE productos SET nombre_producto = ?, descripcion = ?,precio_producto = ?,descuento = ?, activo = ?  WHERE codProducto = ?");
-    $result_update =  $sql_update->execute([$nombreUp,$descripcionUp,$precioUp,$descuentoUp,$activoUp,$row['codProducto']]);
+    $sql_update = $con->prepare("UPDATE productos SET nombre_producto = ?, descripcion = ?,precio_producto = ?,descuento = ?, activo = ?  WHERE cod_producto = ?");
+    $result_update =  $sql_update->execute([$nombreUp,$descripcionUp,$precioUp,$descuentoUp,$activoUp,$row['cod_producto']]);
     $row_uptate = $sql_update->fetch(PDO::FETCH_ASSOC);
 
     if($result_update){

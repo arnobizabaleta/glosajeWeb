@@ -16,7 +16,7 @@
    
   
     /* $sql = "SELECT * FROM usuarios";
-    $sql = "SELECT * FROM usuarios WHERE idUser = $id_user";
+    $sql = "SELECT * FROM usuarios WHERE id_user = $id_user";
     $resultado = $conexion->query($sql);
     $row = $resultado->fetch_assoc(); */
     $emailToClient = $correoRegistro;

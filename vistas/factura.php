@@ -12,10 +12,10 @@
     
     
     if($tipo_usuario == 2){
-        $sql = "SELECT c.cod_compra,id_transaccion,fecha,status,c.id_cliente,u.nombres_usuario,u.tel_user,u.correo_user,c.id_titular,c.email,c.total FROM compras c INNER JOIN usuarios u ON c.id_cliente = u.idUser";
+        $sql = "SELECT c.cod_compra,id_transaccion,fecha,status,c.id_cliente,u.nombres_usuario,u.tel_user,u.correo_user,c.id_titular,c.email,c.total FROM compras c INNER JOIN usuarios u ON c.id_cliente = u.id_user";
         
     }else if($tipo_usuario == 1){
-        $sql = "SELECT c.cod_compra,id_transaccion,fecha,status,c.id_cliente,u.nombres_usuario,u.tel_user,u.correo_user,c.id_titular,c.email,c.total FROM compras c INNER JOIN usuarios u ON c.id_cliente = u.idUser WHERE c.id_cliente = $id";
+        $sql = "SELECT c.cod_compra,id_transaccion,fecha,status,c.id_cliente,u.nombres_usuario,u.tel_user,u.correo_user,c.id_titular,c.email,c.total FROM compras c INNER JOIN usuarios u ON c.id_cliente = u.id_user WHERE c.id_cliente = $id";
     }
 
    

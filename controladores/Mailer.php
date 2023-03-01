@@ -35,7 +35,7 @@ try {
     $mail->Subject = $asunto ;
      
 
-    $mail->Body    = utf8_decode($cuerpo) ;
+    $mail->Body = utf8_decode($cuerpo) ;
    
     $mail->setLanguage('es','../librerias/phpmailer/language/phpmailer.lang-es');
 

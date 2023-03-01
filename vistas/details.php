@@ -17,11 +17,11 @@ if($id == '' || $token == ''){
 }else{
     $token_tmp = hash_hmac('sha1',$id,KEY_TOKEN);
     if($token == $token_tmp){
-        $sql = $con->prepare("SELECT count(codProducto)  FROM productos WHERE codProducto=? AND activo = 1");
+        $sql = $con->prepare("SELECT count(cod_producto)  FROM productos WHERE cod_producto=? AND activo = 1");
         $sql->execute([$id]);
   
         if($sql->fetchColumn() > 0){
-            $sql = $con->prepare("SELECT nombre_producto,descripcion,precio_producto,descuento FROM productos WHERE codProducto=? AND activo=1 LIMIT 1");
+            $sql = $con->prepare("SELECT nombre_producto,descripcion,precio_producto,descuento FROM productos WHERE cod_producto=? AND activo=1 LIMIT 1");
             $sql->execute([$id]);
             $row = $sql->fetch(PDO::FETCH_ASSOC);
             $nombre = $row['nombre_producto'];

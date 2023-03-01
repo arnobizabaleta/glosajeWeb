@@ -38,7 +38,7 @@
                 $db = new Database();
                 $con = $db->conectar();
 
-                $sql = $con->prepare("SELECT precio_producto,descuento FROM productos WHERE codProducto=? AND activo=1 LIMIT 1");
+                $sql = $con->prepare("SELECT precio_producto,descuento FROM productos WHERE cod_producto=? AND activo=1 LIMIT 1");
                 $sql->execute([$id]);
                 $row = $sql->fetch(PDO::FETCH_ASSOC);
                

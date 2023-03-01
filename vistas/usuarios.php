@@ -15,7 +15,7 @@
         $sql = "SELECT * FROM usuarios WHERE activo = 1 and rol = 1";
         
     }else if($tipo_usuario == 1){
-        $sql = "SELECT * FROM usuarios WHERE idUser = $id";
+        $sql = "SELECT * FROM usuarios WHERE id_user = $id";
     }
 
    
@@ -195,7 +195,7 @@ $resultadInact = $conexion->query($sqlInact);
                                         
                                         <?php while($row = $resultado->fetch_assoc()) { ?>
                                        <tr>
-                                        <td><?php echo $row['idUser']; ?></td>
+                                        <td><?php echo $row['id_user']; ?></td>
                                         <td><?php echo $row['nombres_usuario']; ?></td>
                                         <td><?php echo $row['apellidos_usuario']; ?></td>
                                         <td><?php echo $row['correo_user']; ?></td>
@@ -209,11 +209,11 @@ $resultadInact = $conexion->query($sqlInact);
                                             echo" Administrador ";
                                         }  ; ?></td>
                                         <td>
-                                            <a href="./editUser.php?id=<?php echo  $row['idUser']; ?>" class="btn btn-primary">
+                                            <a href="./editUser.php?id=<?php echo  $row['id_user']; ?>" class="btn btn-primary">
                                                 <i class="fas fa-marker"></i>
                                             </a>
                                            <?php if($tipo_usuario == 2){ ?>
-                                            <a href="../controladores/deleteUser.php?id=<?php echo  $row['idUser']; ?>" class="btn btn-danger">
+                                            <a href="../controladores/deleteUser.php?id=<?php echo  $row['id_user']; ?>" class="btn btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                             <?php }?>
@@ -244,7 +244,7 @@ $resultadInact = $conexion->query($sqlInact);
                                        <form action="../controladores/createUser.php" method="post">
                                            
                                             <div class="form-group mb-4">
-                                                <input type="number" class="form-control" placeholder="Identificación" name="idUser"  required="required" autofocus>
+                                                <input type="number" class="form-control" placeholder="Identificación" name="id_user"  required="required" autofocus>
 
                                            </div>
                                             <div class="form-group mb-4">

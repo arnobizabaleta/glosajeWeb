@@ -18,7 +18,7 @@
 if($productos != null){
     foreach($productos as $clave => $cantidad){
 
-        $sql = $con->prepare("SELECT codProducto,nombre_producto,precio_producto, $cantidad AS cantidad,descuento FROM productos WHERE codProducto=? AND  activo=1");
+        $sql = $con->prepare("SELECT cod_producto,nombre_producto,precio_producto, $cantidad AS cantidad,descuento FROM productos WHERE cod_producto=? AND  activo=1");
         $sql->execute([$clave]);
         $lista_carrito[] = $sql->fetch(PDO::FETCH_ASSOC);//Trae los resultados del query por nombreDeColumna
     }
@@ -117,7 +117,7 @@ if($productos != null){
                     }else{
                         $total = 0;
                         foreach($lista_carrito as $producto){
-                            $_id = $producto['codProducto'];
+                            $_id = $producto['cod_producto'];
                             $nombre = $producto['nombre_producto'];
                             $cantidad = $producto['cantidad'];
                             $precio =  $producto['precio_producto'];

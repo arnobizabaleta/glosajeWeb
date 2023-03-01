@@ -6,25 +6,25 @@
     if(!isset($_SESSION['id'])){
         header('Location: ./ login.php');
     } 
-        $idUserNaving = $_SESSION['id'];
+        $id_userNaving = $_SESSION['id'];
         $contrasenaDesencryptada =  $_SESSION['Contrasena'] ;
         $nombre = $_SESSION['nombre'];
         $tipo_usuario = $_SESSION['tipo_usuario'];
 
         if(isset($_GET['id'])){
-            $idUser = $_GET['id'];
+            $id_user = $_GET['id'];
             
 
             $db = new Database();
             $con = $db->conectar();
-            $sql = $con->prepare("SELECT idUser,nombres_usuario,apellidos_usuario,correo_user,contrasena, tel_user, municipio,comuna_barrio,direccion_exacta,rol,activo FROM usuarios WHERE idUser = ?");
-            $result =  $sql->execute([$idUser]);
+            $sql = $con->prepare("SELECT id_user,nombres_usuario,apellidos_usuario,correo_user,contrasena, tel_user, municipio,comuna_barrio,direccion_exacta,rol,activo FROM usuarios WHERE id_user = ?");
+            $result =  $sql->execute([$id_user]);
             $row = $sql->fetch(PDO::FETCH_ASSOC);
             
             if($row > 0){
-                //echo "Puedes editar el producto: " . $row['codProducto'];
-                //echo "Puedes editar el producto: " . $row['codProducto'];
-                $idUser = $row['idUser'];
+                //echo "Puedes editar el producto: " . $row['cod_producto'];
+                //echo "Puedes editar el producto: " . $row['cod_producto'];
+                $id_user = $row['id_user'];
                 $nombres_usuario = $row['nombres_usuario'];
                 $apellidos_usuario = $row['apellidos_usuario'];
                 $correo_user = $row['correo_user'];
@@ -183,7 +183,7 @@
                                        <i class="fas fa-users"></i>Editar Usuario
                                    </div>
                                    <div class="card card-body">
-                                       <form action="./editUser.php?id=<?php echo  $idUser; ?>" method="post">
+                                       <form action="./editUser.php?id=<?php echo  $id_user; ?>" method="post">
                                            
              
                                             <div class="form-group mb-4">
@@ -199,7 +199,7 @@
                                                 <input type="email" class="form-control" placeholder="Correo Electronico" name="correo_userUp" value="<?php echo $correo_user; ?>"  required="required" autofocus>
 
                                            </div>
-                                           <!-- <?php if($idUserNaving == $idUser){?>
+                                           <!-- <?php if($id_userNaving == $id_user){?>
                                            <div class="form-group mb-4">
                                            <input type="password"  class="form-control" placeholder="Contraseña" name="contrasenaUp"  value="<?php echo $contrasena; ?>" required="required" autofocus>
 
@@ -344,12 +344,12 @@ if(isset($_POST['update'])){
                 $rolUp = $_POST['rolUp'];
     
                 if($tipo_usuario == 2){
-                    $sql_update = $con->prepare("UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?,correo_user = ?, tel_user = ? , municipio = ?, comuna_barrio = ?, direccion_exacta = ?, rol = ?  WHERE idUser = ?");
-                    $result_update =  $sql_update->execute([$nombres_usuarioUp,$apellidos_usuarioUp,$correo_userUp,$tel_userUp,$municipioUp ,$comuna_barrioUp,$direccion_exactaUp,$rolUp,$row['idUser']]);
+                    $sql_update = $con->prepare("UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?,correo_user = ?, tel_user = ? , municipio = ?, comuna_barrio = ?, direccion_exacta = ?, rol = ?  WHERE id_user = ?");
+                    $result_update =  $sql_update->execute([$nombres_usuarioUp,$apellidos_usuarioUp,$correo_userUp,$tel_userUp,$municipioUp ,$comuna_barrioUp,$direccion_exactaUp,$rolUp,$row['id_user']]);
                     $row_uptate = $sql_update->fetch(PDO::FETCH_ASSOC);
                 }else if($tipo_usuario == 1){
-                    $sql_update = $con->prepare("UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?,correo_user = ?, tel_user = ? , municipio = ?, comuna_barrio = ?, direccion_exacta = ?  WHERE idUser = ?");
-                    $result_update =  $sql_update->execute([$nombres_usuarioUp,$apellidos_usuarioUp,$correo_userUp,$tel_userUp,$municipioUp ,$comuna_barrioUp,$direccion_exactaUp,$row['idUser']]);
+                    $sql_update = $con->prepare("UPDATE usuarios SET nombres_usuario = ?, apellidos_usuario = ?,correo_user = ?, tel_user = ? , municipio = ?, comuna_barrio = ?, direccion_exacta = ?  WHERE id_user = ?");
+                    $result_update =  $sql_update->execute([$nombres_usuarioUp,$apellidos_usuarioUp,$correo_userUp,$tel_userUp,$municipioUp ,$comuna_barrioUp,$direccion_exactaUp,$row['id_user']]);
                     $row_uptate = $sql_update->fetch(PDO::FETCH_ASSOC);
 
                 }

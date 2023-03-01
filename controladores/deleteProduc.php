@@ -11,7 +11,7 @@
         require '../config/database.php';
         $db = new Database();
         $con = $db->conectar();
-        $sql = $con->prepare("UPDATE productos SET activo = 0 WHERE codProducto = ?");
+        $sql = $con->prepare("UPDATE productos SET activo = 0 WHERE cod_producto = ?");
         $result =  $sql->execute([$idProducto]);
         if(!$result){
             die("Error al eliminar el producto");

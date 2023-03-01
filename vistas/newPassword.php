@@ -1,14 +1,49 @@
 <?php
-session_start();
-//Si  existe una session de usuario asociada un correo 
-if (isset($_SESSION["usuario"])) {
 
-    //Redireccionando al index
-    header("location: ./catalogo.php");
+require '../config/config.php';
+require '../config/database.php';
+$email = isset($_GET['email']) ? $_GET['email'] : "";
+$token = isset($_GET['token']) ? $_GET['token'] : "";
+
+$db = new Database();
+$connect = $db->conectar();
+
+if (isset($_POST["newPassword"])) {
+    $password = $_POST["newPassword"];
+    $email = $_POST["retrieveEmail"];
+    $password = hash("sha512", $password);
+
+    try {
+
+        $sql = $connect->prepare("UPDATE usuarios SET contrasena_user = ? WHERE correo_user = ?");
+        $sql->execute([$password, $email]);
+    } catch (PDOException $e) {
+        http_response_code(401);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "message" => "Hubo un error"
+        ]);
+        exit();
+    }
+
+    http_response_code(200);
+    exit();
+}
+
+if ($email == "" || $token == "") {
+    header("Location: ./login.php");
+    exit();
+}
+
+$user = $connect->prepare("SELECT * FROM usuarios WHERE correo_user = ? AND token = ?");
+$user->execute([$email, $token]);
+
+
+if ($user->fetchColumn() <= 0) {
+    header("Location: ./login.php");
+    exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -35,39 +70,14 @@ if (isset($_SESSION["usuario"])) {
             <!--Formulario de Login y registro-->
             <div class="contenedor__login-register">
                 <!--Login-->
-                <form action="../controladores/recuperarPassword.php" method="POST" class="formulario__login" data-form-get-password="true">
-                    <h2>Recuperar contraseña</h2>
-                    <input data-field-name="email" data-valid="false" type="email" placeholder="Correo Electronico" name="Correo" required="required">
-                    <button type="submit" disabled>Recuperar</button>
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" class="formulario__login" data-form-get-password="true">
+                    <h2>Escribe la nueva contraseña</h2>
+                    <input type="email" hidden name="retrieveEmail" value="<?php echo $email ?>">
+                    <input data-field-name="password" data-valid="false" type="password" placeholder="Nueva Contraseña" name="newPassword" required="required">
+                    <button type="submit" disabled>Cambiar</button>
                 </form>
 
     </main>
-
-    <footer>
-        <?php
-        //Variables parametros conexion servidor y bases de datos 
-
-
-        /*
-    Hacemos el llamado al archivo que contiene los valores 
-    parametros para conectarnos a la base de datos
-*/
-
-        require '../config/conexionBasesDatos.php';
-        $conexion = new mysqli($host, $user, $password, $dbname, $port, $socket);
-
-        //Verificamos la conexión
-        /*  if($conexion -> connect_errno){
-    echo" <br> <p>Error de conexión a la base de datos </p> " . $conexion -> connect_error;
-   
-    exit();
-}else{
-    echo"<br><p> Conectados al servidor y listos para usar la base de datos </p>" . $dbname;
-}  */
-
-
-        ?>
-    </footer>
 
     <script src="../assetsLogin/js/script.js"></script>
 
@@ -107,20 +117,22 @@ if (isset($_SESSION["usuario"])) {
                 body: data,
                 failFetchOptions: {
                     useAbortEndedTime: true,
-                    maxTime: 5000
+                    maxTime: 3000
                 }
             });
 
             if (request?.ok) {
                 messages.activeGlobalMessageV2({
-                    message: "Revise su correo electronico"
+                    message: "¡Todo listo!",
+                    useOkFunction: () => location.href = "./login.php"
                 });
+
             }
         });
 
         handleValidateFields(form);
 
-        form.querySelectorAll("[data-field-name='email']").forEach(element => {
+        form.querySelectorAll("[data-field-name='password']").forEach(element => {
             return handleOnBlurFields(element);
         });
     </script>

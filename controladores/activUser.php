@@ -1,12 +1,12 @@
 <?php
     if(isset($_GET['id'])){
-        $idUser = $_GET['id'];
+        $id_user = $_GET['id'];
         require '../config/config.php';
         require '../config/database.php';
         $db = new Database();
         $con = $db->conectar();
-        $sql = $con->prepare("UPDATE usuarios SET activo = 1 WHERE idUser = ?");
-        $result =  $sql->execute([$idUser]);
+        $sql = $con->prepare("UPDATE usuarios SET activo = 1 WHERE id_user = ?");
+        $result =  $sql->execute([$id_user]);
         if(!$result){
             $_SESSION['message'] = "Error al activar el usuario";
             $_SESSION['message_type'] = "danger";

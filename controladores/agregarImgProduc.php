@@ -5,14 +5,14 @@
         if(!isset($_SESSION['id'])){
             header('Location: ../vistas/login.php');
         }
-        $codProducto = $_POST['codProducto'];
+        $cod_producto = $_POST['cod_producto'];
         $db = new Database();
         $con = $db->conectar();
-        $sql = $con->prepare("SELECT * FROM  productos WHERE codProducto = ?");
-        $resultado =  $sql->execute([$codProducto]);
+        $sql = $con->prepare("SELECT * FROM  productos WHERE cod_producto = ?");
+        $resultado =  $sql->execute([$cod_producto]);
         $row =  $sql->fetchAll(PDO::FETCH_ASSOC);
         
-        //Verificando que el codProducto introducido corresponda a uno registrado
+        //Verificando que el cod_producto introducido corresponda a uno registrado
         if($row > 0){
           $nombre_imagen = $_FILES['imagen']['name'];
           $tipo_imagen = $_FILES['imagen']['type'];
@@ -30,7 +30,7 @@
                  
                  
                   //Ruta de la carpeta_destino en el servidor
-                 $carpeta_destino = $_SERVER['DOCUMENT_ROOT'] . '/glosajeWeb/assets/images/productos/' . $codProducto . '/' ;
+                 $carpeta_destino = $_SERVER['DOCUMENT_ROOT'] . '/glosajeWeb/assets/images/productos/' . $cod_producto . '/' ;
                  
                  
                  $carpetaTemporal = $_FILES['imagen']['tmp_name'];

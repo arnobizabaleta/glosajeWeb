@@ -6,7 +6,7 @@ require '../config/database.php';
 function validaToken($id,$token,$con){
 
     $msg = "";
-    $sql = $con->prepare("SELECT idUser FROM usuarios WHERE idUser = ? AND token = ? LIMIT 1");
+    $sql = $con->prepare("SELECT id_user FROM usuarios WHERE id_user = ? AND token = ? LIMIT 1");
     $sql->execute([$id, $token]);
     
     if($sql->fetchColumn() > 0){
@@ -16,13 +16,13 @@ function validaToken($id,$token,$con){
             $msg = "Error al activar cuenta";
         }
     }else{
-        $msg = "No existe el registro del cliente.";
+        $msg = "Nos existe el registro del cliente.";
     }
     return $msg;
 }
 
 function activarUsuario($id,$con){
-    $sql = $con->prepare("UPDATE usuarios SET activo = 1 WHERE idUser = ?");
+    $sql = $con->prepare("UPDATE usuarios SET activo = 1 WHERE id_user = ?");
     return  $sql->execute([$id]);
 
     

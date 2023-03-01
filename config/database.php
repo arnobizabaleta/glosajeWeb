@@ -3,11 +3,11 @@ class Database
 {
     // Declaración de una propiedad
     private $hostname = 'localhost';
-    private $database = 'glosajeweb02';
+    private $database = 'glosajeweb';
     private $username = 'root';
     private $password = "";
     private $charset = 'utf8';
-    private $port = 3308;
+    private $port = 3306;
 
     // Declaración de un método
     function conectar()

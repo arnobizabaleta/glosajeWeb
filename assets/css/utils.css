@@ -1,0 +1,41 @@
+.implemetnsLoader {
+    border: 4px solid rgba(0, 0, 0, 0.4);
+    min-width: 36px;
+    max-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: transparent;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        border: 4px solid rgba(0, 0, 0, 0.6);
+        border-left-color: transparent;
+    }
+
+    20% {
+        border: 4px solid rgba(26, 4, 93, 0.6);
+        border-left-color: transparent;
+    }
+
+    40% {
+        border: 4px solid rgba(223, 221, 230, 0.6);
+        border-left-color: transparent;
+
+    }
+
+    100% {
+        /* background-color: #222; */
+        border: 4px solid rgba(139, 9, 9, 0.4);
+        border-left-color: transparent;
+        transform: rotate(360deg);
+    }
+}
+
+button:disabled {
+    background-color: gray;
+    opacity: 0.2;
+}

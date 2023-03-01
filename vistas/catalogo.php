@@ -25,7 +25,7 @@ if(!isset($_SESSION["usuario"])){
   
   $db = new Database();
   $con = $db->conectar();
-  $sql = $con->prepare("SELECT codProducto,nombre_producto,precio_producto,descuento FROM productos WHERE activo=1");
+  $sql = $con->prepare("SELECT cod_producto,nombre_producto,precio_producto,descuento FROM productos WHERE activo=1");
   $sql->execute();
   $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);//Trae los resultados del query por nombreDeColumna
   
@@ -114,14 +114,14 @@ if(!isset($_SESSION["usuario"])){
         <div class="col">
           <div class="card shadow-sm">
             <?php
-              $id = $row['codProducto'];
+              $id = $row['cod_producto'];
               $imagen = "../assets/images/productos/". $id ."/principal.jpg";
 
               if(!file_exists($imagen)){
                 $imagen = "../assets/images/no-photo.jpg";
               }
             ?>
-            <a href="details.php?id=<?php echo $row['codProducto']; ?>&token=<?php echo hash_hmac('sha1',$row['codProducto'],KEY_TOKEN); ?>" title="principal">
+            <a href="details.php?id=<?php echo $row['cod_producto']; ?>&token=<?php echo hash_hmac('sha1',$row['cod_producto'],KEY_TOKEN); ?>" title="principal">
             <img src="<?php echo $imagen ?>" class="d-block w-100" id="mainImg">
             </a>
         
@@ -131,9 +131,9 @@ if(!isset($_SESSION["usuario"])){
               <p class="card-text"><?php echo number_format($precioDesc,2,".",","); ?> USD</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <a href="details.php?id=<?php echo $row['codProducto']; ?>&token=<?php echo hash_hmac('sha1',$row['codProducto'],KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
+                    <a href="details.php?id=<?php echo $row['cod_producto']; ?>&token=<?php echo hash_hmac('sha1',$row['cod_producto'],KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
                 </div>
-                <button class="btn btn-outline-success" type="button"  onclick="addProducto(<?php echo $row['codProducto'];?>,'<?php echo hash_hmac('sha1',$row['codProducto'],KEY_TOKEN); ?>')">
+                <button class="btn btn-outline-success" type="button"  onclick="addProducto(<?php echo $row['cod_producto'];?>,'<?php echo hash_hmac('sha1',$row['cod_producto'],KEY_TOKEN); ?>')">
                   Agregar al carrito</button>
               
             </div>

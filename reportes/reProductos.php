@@ -17,7 +17,7 @@ ob_start();
     
     
     if($tipo_usuario == 'Administrador'){
-        $sql = "SELECT codProducto,nombre_producto, descripcion,precio_producto,descuento, c.nombre_categoria AS categoria,p.activo FROM productos p INNER JOIN categorias c ON p.cod_categoria = c.codCategoria;";
+        $sql = "SELECT cod_producto,nombre_producto, descripcion,precio_producto,descuento, c.nombre_categoria AS categoria,p.activo FROM productos p INNER JOIN categorias c ON p.cod_categoria = c.codCategoria;";
         
     }else if($tipo_usuario == 'Cliente'){
         header('Location: micuenta.php');
@@ -80,7 +80,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                         
                                         <?php while($row = $resultado->fetch_assoc()) { ?>
                                        <tr>
-                                        <td><?php echo $row['codProducto']; ?></td>
+                                        <td><?php echo $row['cod_producto']; ?></td>
                                         <td><?php echo $row['nombre_producto']; ?></td>
                                         <td><?php echo $row['descripcion']; ?></td>
                                         <td><?php echo $row['precio_producto']; ?></td>

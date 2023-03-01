@@ -11,7 +11,7 @@
     
     
     if($tipo_usuario == 2){
-        $sql = "SELECT codProducto,nombre_producto, descripcion,precio_producto,descuento, c.nombre_categoria AS categoria,p.activo FROM productos p INNER JOIN categorias c ON p.cod_categoria = c.codCategoria;";
+        $sql = "SELECT cod_producto,nombre_producto, descripcion,precio_producto,descuento, c.nombre_categoria AS categoria,p.activo FROM productos p INNER JOIN categorias c ON p.cod_categoria = c.codCategoria;";
         
     }else if($tipo_usuario == 1){
         header('Location: micuenta.php');
@@ -189,7 +189,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                         
                                         <?php while($row = $resultado->fetch_assoc()) { ?>
                                        <tr>
-                                        <td><?php echo $row['codProducto']; ?></td>
+                                        <td><?php echo $row['cod_producto']; ?></td>
                                         <td><?php echo $row['nombre_producto']; ?></td>
                                         <td><?php echo $row['descripcion']; ?></td>
                                         <td><?php echo $row['precio_producto']; ?></td>
@@ -198,10 +198,10 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                         <td><?php echo $row['activo']; ?></td>
                                        
                                         <td>
-                                            <a href="./editProduc.php?id=<?php echo $row['codProducto']; ?>" class="btn btn-primary">
+                                            <a href="./editProduc.php?id=<?php echo $row['cod_producto']; ?>" class="btn btn-primary">
                                                 <i class="fas fa-marker"></i>
                                             </a>
-                                            <a href="../controladores/deleteProduc.php?id=<?php echo $row['codProducto']; ?>" class="btn btn-danger">
+                                            <a href="../controladores/deleteProduc.php?id=<?php echo $row['cod_producto']; ?>" class="btn btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </td>
@@ -287,7 +287,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                         <p>Ejemplo "principal.jpg"</p>
                                         <form action="../controladores/agregarImgProduc.php" method="post" enctype="multipart/form-data">
                                             <div class="form-group mb-4">
-                                              <input type="number" name="codProducto" class="form-control" placeholder="Codigo del producto"  required="" autofocus>
+                                              <input type="number" name="cod_producto" class="form-control" placeholder="Codigo del producto"  required="" autofocus>
 
                                             </div>
                                             <div class="form-group mb-4">
