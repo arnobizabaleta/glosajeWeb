@@ -3,7 +3,7 @@ class Database
 {
     // Declaración de una propiedad
     private $hostname = 'localhost';
-    private $database = 'glosajeweb02';
+    private $database = 'glosajeweb03';
     private $username = 'root';
     private $password = "";
     private $charset = 'utf8';
